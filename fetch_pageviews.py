@@ -30,16 +30,6 @@ def get_report(analytics, site, pageToken=None):
     Returns:
       The Analytics Reporting API V4 response.
 
-                    'metricFilterClauses': [{
-                        'filters': [{
-                            "metricName": 'ga:pageviews',
-                            "operator": "GREATER_THAN",
-                            "comparisonValue": "2"
-                        }]
-                    }],
-
-
-
     """
 
     return analytics.reports().batchGet(
