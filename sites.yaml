@@ -1,0 +1,14 @@
+zfin:
+    name: zfin
+    filename: 'zfin_urls.txt'
+    view: '4490530'
+    filters:
+        - '^\/(?:ZFIN:)*ZDB-\w+-\d{6}-\d+$'
+        - '^\/\w+:\d+$'
+alliance:
+    name: alliance
+    filename: 'alliance_urls.txt'
+    view: '149898635'
+    filters:
+        - '^\/\w+\/ZFIN:ZDB-\w+-\d{6}-\d+$'
+        - '^\/\w+\/\w+:(?:\w)*\d+$'
