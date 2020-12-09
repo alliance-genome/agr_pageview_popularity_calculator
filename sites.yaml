@@ -1,10 +1,3 @@
-zfin:
-    name: zfin
-    filename: 'zfin_urls.txt'
-    view: '4490530'
-    filters:
-        - '^\/(?:ZFIN:)*ZDB-\w+-\d{6}-\d+$'
-        - '^\/\w+:\d+$'
 alliance:
     name: alliance
     filename: 'alliance_urls.txt'
@@ -12,3 +5,21 @@ alliance:
     filters:
         - '^\/\w+\/ZFIN:ZDB-\w+-\d{6}-\d+$'
         - '^\/\w+\/\w+:(?:\w)*\d+$'
+mgi:
+    name: mgi
+    filename: 'mgi_urls.txt'
+    view: '22694526'
+    filters:
+        - '^\/marker\/MGI:\d+$'
+        - '^\/allele\/MGI:\d+$'
+        - '^\/allele\/genoview\/MGI:\d+$'
+        - '^\/vocab\/\w+\/\w+:\d+$'
+        - '^\/disease\/DOID:\d+$'
+zfin:
+    name: zfin
+    filename: 'zfin_urls.txt'
+    view: '4490530'
+    filters:
+        - '^\/(?:ZFIN:)*ZDB-\w+-\d{6}-\d+$'
+        - '^\/\w+:\d+$'
+
