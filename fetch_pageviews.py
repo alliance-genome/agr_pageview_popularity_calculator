@@ -7,6 +7,7 @@ import yaml
 SCOPES = ['https://www.googleapis.com/auth/analytics.readonly']
 KEY_FILE_LOCATION = 'client_secrets.json'
 
+
 def initialize_analyticsreporting():
     """Initializes an Analytics Reporting API V4 service object.
 
@@ -37,7 +38,7 @@ def get_report(analytics, site, pageToken=None):
             'reportRequests': [
                 {
                     'viewId': site['view'],
-                    'dateRanges': [{'startDate': '2019-01-01', 'endDate': '2019-12-31'}],
+                    'dateRanges': [{'startDate': '2020-01-01', 'endDate': '2020-12-31'}],
                     'metrics': [{'expression': 'ga:pageviews'}],
                     'dimensions': [{'name': 'ga:pagePath'}],
                     'dimensionFilterClauses': [{

@@ -5,6 +5,13 @@ alliance:
     filters:
         - '^\/\w+\/ZFIN:ZDB-\w+-\d{6}-\d+$'
         - '^\/\w+\/\w+:(?:\w)*\d+$'
+flybase:
+    name: flybase
+    filename: 'flybase_urls.txt'
+    view: '42621209'
+    filters:
+        - '^\/reports/[\w\d]+$'
+
 mgi:
     name: mgi
     filename: 'mgi_urls.txt'
