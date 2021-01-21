@@ -11,7 +11,6 @@ flybase:
     view: '42621209'
     filters:
         - '^\/reports/[\w\d]+$'
-
 mgi:
     name: mgi
     filename: 'mgi_urls.txt'
