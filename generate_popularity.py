@@ -56,4 +56,8 @@ alliance = alliance.assign(popularity=alliance['alliance_count'] + alliance['com
 
 popularity = alliance['popularity']
 
+# Duplicates can happen, like a request for '/gene/DOID:123456' because people do weird things
+# just sum them to safely deduplicate (dropping lower value might be safer for weeding out?)
+popularity = popularity.groupby(level=0).sum()
+
 popularity.to_csv('popularity.tsv', sep='\t', header=None)
