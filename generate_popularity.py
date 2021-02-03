@@ -1,4 +1,8 @@
 import pandas as pd
+import yaml
+
+with open("sites.yaml") as file:
+    sites = yaml.full_load(file)
 
 # multiplier used on page views for orthologs
 scale_factor = .1
@@ -9,19 +13,21 @@ mgi = pd.read_csv('mgi_urls.txt', sep='\t', names=['id', 'mod_count'])
 zfin = pd.read_csv('zfin_urls.txt', sep='\t', names=['id', 'mod_count'])
 orthology = pd.read_csv('ORTHOLOGY-ALLIANCE_COMBINED_37.tsv', sep='\t', comment='#')
 
+mods = [flybase, mgi, zfin]
+sites = [alliance] + mods
+
 id_capture = r'\/([^/]+)$'
-alliance['id'] = alliance['id'].str.extract(id_capture)
-flybase['id'] = flybase['id'].str.extract(id_capture)
-mgi['id'] = mgi['id'].str.extract(id_capture)
-zfin['id'] = zfin['id'].str.extract(id_capture)
+for site in sites:
+    site['id'] = site['id'].str.extract(id_capture)
+
 # convert local IDs to curies
 flybase['id'] = flybase['id'].apply(lambda x: x if ':' in x else 'FB:' + x)
 zfin['id'] = zfin['id'].apply(lambda x: x if ':' in x else 'ZFIN:' + x)
 
-alliance.set_index('id', inplace=True)
-flybase.set_index('id', inplace=True)
-mgi.set_index('id', inplace=True)
-zfin.set_index('id', inplace=True)
+for site in sites:
+    site.set_index('id', inplace=True)
+
+alliance = alliance.groupby(level=0).sum()
 
 # write simple popularity files
 alliance.to_csv('alliance_popularity.tsv', sep='\t', header=None)
@@ -35,7 +41,7 @@ orthology = orthology[orthology.Gene1SpeciesName == 'Homo sapiens']
 orthology = orthology[['Gene1ID', 'Gene2ID']]
 
 # now generate the enhanced popularity file, with a lil something extra for human genes
-all_mods = pd.concat([flybase, mgi, zfin])
+all_mods = pd.concat(mods)
 
 orthopop = orthology.merge(all_mods, how='left', left_on='Gene2ID', right_index=True)
 orthopop = orthopop.rename(columns={'mod_count': 'Gene2ModCount'})
