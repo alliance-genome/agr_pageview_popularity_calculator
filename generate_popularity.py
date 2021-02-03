@@ -23,11 +23,18 @@ flybase.set_index('id', inplace=True)
 mgi.set_index('id', inplace=True)
 zfin.set_index('id', inplace=True)
 
+# write simple popularity files
+alliance.to_csv('alliance_popularity.tsv', sep='\t', header=None)
+flybase.to_csv('flybase_populiarty.tsv', sep='\t', header=None)
+mgi.to_csv('mgi_populiarty.tsv', sep='\t', header=None)
+zfin.to_csv('zfin_populiarty.tsv', sep='\t', header=None)
+
 # keep only best score matches, slim down to just the two gene IDs
 orthology = orthology[orthology.IsBestScore == 'Yes']
 orthology = orthology[orthology.Gene1SpeciesName == 'Homo sapiens']
 orthology = orthology[['Gene1ID', 'Gene2ID']]
 
+# now generate the enhanced popularity file, with a lil something extra for human genes
 all_mods = pd.concat([flybase, mgi, zfin])
 
 orthopop = orthology.merge(all_mods, how='left', left_on='Gene2ID', right_index=True)
@@ -60,4 +67,4 @@ popularity = alliance['popularity']
 # just sum them to safely deduplicate (dropping lower value might be safer for weeding out?)
 popularity = popularity.groupby(level=0).sum()
 
-popularity.to_csv('popularity.tsv', sep='\t', header=None)
+popularity.to_csv('enhanced-alliance-popularity.tsv', sep='\t', header=None)
